@@ -2,8 +2,10 @@ import React from "react";
 import Paper from "material-ui/Paper";
 import TextField from "material-ui/TextField";
 import RaisedButton from 'material-ui/RaisedButton';
-import http from './../utils/http';
 export default class CaptureComponent extends React.Component {
+  static propTypes = {
+    insert: React.PropTypes.func.isRequired
+  };
   constructor(props) {
     super(props);
     this.state = {
@@ -17,10 +19,7 @@ export default class CaptureComponent extends React.Component {
     });
   };
   saveAction = () => {
-    http.makeRequest('POST', '/captures', () => {
-      console.log('rly?!');
-    });
-    console.log(this.state.actionDescription);
+    this.props.insert(this.state.actionDescription);
   };
   render() {
     return (

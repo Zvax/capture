@@ -1,4 +1,7 @@
 <?php
 
 namespace API;
-interface Capturable {}
+interface Capturable {
+    public function getDescription(): string;
+    public function getId(): int;
+}

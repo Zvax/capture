@@ -10,10 +10,13 @@ use Http\Request;
 use Http\Response;
 use Stepping\Action;
 use Stepping\InjectionParams;
-function getRoutes(): array
+use PDO;
+function getRoutes(): \Generator
 {
-    $routes = require __DIR__ . '/routes.php';
-    return $routes;
+    foreach (require __DIR__ . '/routes.php' as $route)
+    {
+        yield $route;
+    }
 }
 
 function getDispatcher(): Dispatcher
@@ -106,11 +109,22 @@ function send(Response $response)
     echo $response->getContent();
 }
 
+function createProdPDO(): PDO {
+    $config = parse_ini_file(__DIR__.'/../config.ini');
+    $dsn = "mysql:host=$config[host];port=$config[port];charset=$config[charset];dbname=$config[dbname];";
+    return new PDO($dsn, $config['user'], $config['passwd'], [
+        PDO::ATTR_EMULATE_PREPARES => false,
+        PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
+        PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
+    ]);
+}
+
 function getDefaultInjectionParams(): InjectionParams
 {
     $shares = [
         'Http\Request',
         'Http\Response',
+        'PDO',
     ];
     $aliases = [
         'Http\Request' => 'Http\HttpRequest',
@@ -125,7 +139,10 @@ function getDefaultInjectionParams(): InjectionParams
             ':server' => $_SERVER,
         ]
     ];
-    return new InjectionParams($shares, $aliases, $defines, [], []);
+    $delegates = [
+        'PDO' => 'Capture\createProdPDO'
+    ];
+    return new InjectionParams($shares, $aliases, $defines, [], $delegates);
 }
 
 function makeProdInjector(): Injector
