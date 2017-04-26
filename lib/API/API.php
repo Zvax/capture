@@ -22,12 +22,25 @@ class API implements Service
         $stmt->bindValue(':id', $c->getId(), PDO::PARAM_INT);
         $stmt->execute();
     }
-    public function getAllStuff(): \Generator
+    private function getRows(array $currentRows, \PDOStatement $childrenStmt): array
     {
-        $stmt = $this->pdo->query('SELECT id, description FROM stuff');
-        foreach ($stmt->fetchAll() as $row)
+        $rows = [];
+        foreach ($currentRows as $row)
         {
-            yield $row;
+            $childrenStmt->bindValue(':parent', $row['id'], PDO::PARAM_INT);
+            $childrenStmt->execute();
+            if ($childrenStmt->rowCount() > 0)
+            {
+                $row['children'] = $this->getRows($childrenStmt->fetchAll(), $childrenStmt);
+            }
+            $rows[] = $row;
         }
+        return $rows;
+    }
+    public function getAllStuff(): array
+    {
+        $stmt = $this->pdo->query('SELECT id, description FROM stuff WHERE parentId IS NULL');
+        $childrenStmt = $this->pdo->prepare('SELECT id, description FROM stuff WHERE parentId=:parent');
+        return $this->getRows($stmt->fetchAll(), $childrenStmt);
     }
 }

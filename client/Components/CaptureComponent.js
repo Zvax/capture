@@ -17,6 +17,16 @@ export default class CaptureComponent extends React.Component {
     };
   }
 
+  listStuff = (stuff) => {
+    return stuff.map((elem, i) => {
+      if (elem.children && elem.children.length > 0) {
+        return <ListItem key={i} primaryText={elem.description} nestedItems={this.listStuff(elem.children)} />;
+      } else {
+        return <ListItem key={i} primaryText={elem.description} />;
+      }
+    });
+  };
+
   handleDescriptionChange = (event) => {
     this.setState({
       ...this.state,
@@ -47,9 +57,7 @@ export default class CaptureComponent extends React.Component {
               onClick={this.saveAction}
               label="Capture!" />
             <List>
-              {this.props.stuff.map((elem, i) => {
-                return <ListItem key={i} primaryText={elem.description} />;
-              })}
+              {this.listStuff(this.props.stuff)}
             </List>
           </Paper>
         </div>

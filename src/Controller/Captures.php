@@ -21,7 +21,6 @@ class Captures
     }
     public function sendStuffListInJson()
     {
-        $stuff = iterator_to_array($this->api->getAllStuff());
-        return getBuildResponseStep(json_encode($stuff));
+        return getBuildResponseStep(json_encode($this->api->getAllStuff()));
     }
 }

@@ -1,15 +1,15 @@
-#Capture
+# Capture
 
 Capture all the tasks
 
-##Installation
+## Installation
 
  - `composer install --no-dev --optimize-autoloader`
  - `npm install`
  - `npm build:prod`
- - import the content of `data/sql/struct.sql` to the database
+ - import the content of `data/struct.sql` to the database
 
-##Configuration
+## Configuration
 
 The app expects a config.ini file at the topmost level:
 
@@ -22,6 +22,6 @@ user = user
 passwd = passwd
 </pre>
 
-##Running the app
+## Running the app
 
 Then serve the content of /public.
