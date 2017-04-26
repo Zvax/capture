@@ -19,7 +19,6 @@ const muitheme = getMuiTheme({
   paper: {
     padding: 40
   },
-  fontFamily: 'PT Sans, sans-serif',
   avatar: {
     overflow: 'hidden'
   },
@@ -42,7 +41,7 @@ const muitheme = getMuiTheme({
 });
 const activateReactComponent = (component, elem) => {
   ReactDOM.render(
-  <MuiThemeProvider muiTheme={muitheme}>{component}</MuiThemeProvider>,
+    <MuiThemeProvider muiTheme={muitheme}>{component}</MuiThemeProvider>,
     elem
   );
 };
