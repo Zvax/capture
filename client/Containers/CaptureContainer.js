@@ -27,9 +27,17 @@ export default class CaptureContainer extends React.Component {
       this.loadStuff();
     });
   };
+  update = (id, description) => {
+    http.put('/captures', {id: id, description: description}, () => {
+      console.log('goal was updated');
+    });
+  };
   render() {
     return (
-      <CaptureComponent insert={this.insert} stuff={this.state.stuff} />
+      <CaptureComponent
+        insert={this.insert}
+        update={this.update}
+        stuff={this.state.stuff} />
     );
   }
 }

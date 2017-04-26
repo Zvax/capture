@@ -32,7 +32,17 @@ const http = ( (getXhr, objectToFormData) => {
       };
       xhr.open('POST', url);
       xhr.send(data);
-    }
+    },
+    put: (url, data, callable) => {
+      let xhr = getXhr();
+      xhr.onload = () => {
+        if (callable !== undefined) {
+          callable(xhr.responseText, xhr.status);
+        }
+      };
+      xhr.open('PUT', url);
+      xhr.send(JSON.stringify(data));
+    },
   };
 })(getXhr, objectToFormData);
 export default http;

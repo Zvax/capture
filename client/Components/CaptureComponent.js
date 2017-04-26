@@ -3,11 +3,13 @@ import PropTypes from "prop-types";
 import Paper from "material-ui/Paper";
 import TextField from "material-ui/TextField";
 import RaisedButton from "material-ui/RaisedButton";
-import {List, ListItem} from "material-ui/List";
+import StuffEntry from "./StuffEntry";
+import {List} from "material-ui/List";
 export default class CaptureComponent extends React.Component {
   static propTypes = {
     stuff: PropTypes.array.isRequired,
-    insert: PropTypes.func.isRequired
+    insert: PropTypes.func.isRequired,
+    update: PropTypes.func.isRequired
   };
 
   constructor(props) {
@@ -17,12 +19,31 @@ export default class CaptureComponent extends React.Component {
     };
   }
 
-  listStuff = (stuff) => {
+  updateAction = (id, description) => {
+    this.props.update(id, description);
+  };
+
+  listStuff = (stuff, level) => {
     return stuff.map((elem, i) => {
       if (elem.children && elem.children.length > 0) {
-        return <ListItem key={i} primaryText={elem.description} nestedItems={this.listStuff(elem.children)} />;
+        return (
+          <StuffEntry
+            key={i}
+            id={elem.id}
+            description={elem.description}
+            nestedLevel={level}
+            update={this.updateAction}
+            children={this.listStuff(elem.children, level+1)} />
+        );
       } else {
-        return <ListItem key={i} primaryText={elem.description} />;
+        return (
+          <StuffEntry
+            key={i}
+            id={elem.id}
+            description={elem.description}
+            nestedLevel={level}
+            update={this.updateAction} />
+        );
       }
     });
   };

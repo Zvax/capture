@@ -19,6 +19,17 @@ class Captures
         $capture = new Goal($this->request->getParameters());
         $this->api->insert($capture);
     }
+    public function updateFromPut()
+    {
+        $inputStream = fopen("php://input", "r");
+        $contents = '';
+        while (!feof($inputStream)) {
+            $contents .= fread($inputStream, 8192);
+        }
+        fclose($inputStream);
+        $capture = new Goal(json_decode($contents, true));
+        $this->api->update($capture);
+    }
     public function sendStuffListInJson()
     {
         return getBuildResponseStep(json_encode($this->api->getAllStuff()));
