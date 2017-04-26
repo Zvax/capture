@@ -22,4 +22,12 @@ class API implements Service
         $stmt->bindValue(':id', $c->getId(), PDO::PARAM_INT);
         $stmt->execute();
     }
+    public function getAllStuff(): \Generator
+    {
+        $stmt = $this->pdo->query('SELECT id, description FROM stuff');
+        foreach ($stmt->fetchAll() as $row)
+        {
+            yield $row;
+        }
+    }
 }

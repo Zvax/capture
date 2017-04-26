@@ -1,17 +1,22 @@
 import React from "react";
+import PropTypes from "prop-types";
 import Paper from "material-ui/Paper";
 import TextField from "material-ui/TextField";
-import RaisedButton from 'material-ui/RaisedButton';
+import RaisedButton from "material-ui/RaisedButton";
+import {List, ListItem} from "material-ui/List";
 export default class CaptureComponent extends React.Component {
   static propTypes = {
-    insert: React.PropTypes.func.isRequired
+    stuff: PropTypes.array.isRequired,
+    insert: PropTypes.func.isRequired
   };
+
   constructor(props) {
     super(props);
     this.state = {
       actionDescription: ""
     };
   }
+
   handleDescriptionChange = (event) => {
     this.setState({
       ...this.state,
@@ -20,7 +25,12 @@ export default class CaptureComponent extends React.Component {
   };
   saveAction = () => {
     this.props.insert(this.state.actionDescription);
+    this.setState({
+      ...this.state,
+      actionDescription: "",
+    });
   };
+
   render() {
     return (
       <div className="pure-g capture">
@@ -35,7 +45,12 @@ export default class CaptureComponent extends React.Component {
               multiLine={true} />
             <RaisedButton
               onClick={this.saveAction}
-              label="Capture!"/>
+              label="Capture!" />
+            <List>
+              {this.props.stuff.map((elem, i) => {
+                return <ListItem key={i} primaryText={elem.description} />;
+              })}
+            </List>
           </Paper>
         </div>
       </div>

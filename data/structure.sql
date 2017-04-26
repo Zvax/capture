@@ -8,7 +8,7 @@ CREATE TABLE IF NOT EXISTS `stuff` (
 
 
 ALTER TABLE `stuff`
-  ADD KEY `id` (`id`);
+  ADD UNIQUE KEY `id` (`id`) USING BTREE;
 
 
 ALTER TABLE `stuff`

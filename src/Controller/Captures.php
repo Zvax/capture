@@ -3,6 +3,7 @@
 namespace Capture\Controller;
 use API\API;
 use API\Goal;
+use function Capture\getBuildResponseStep;
 use Http\Request;
 class Captures
 {
@@ -17,5 +18,10 @@ class Captures
     {
         $capture = new Goal($this->request->getParameters());
         $this->api->insert($capture);
+    }
+    public function sendStuffListInJson()
+    {
+        $stuff = iterator_to_array($this->api->getAllStuff());
+        return getBuildResponseStep(json_encode($stuff));
     }
 }
