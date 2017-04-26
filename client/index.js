@@ -4,6 +4,9 @@ import getMuiTheme from 'material-ui/styles/getMuiTheme';
 import ReactDOM from "react-dom";
 import {CaptureContainer} from "./Containers";
 import injectTapEventPlugin  from 'react-tap-event-plugin';
+// TODO workaround phpstorm automatically removing unused definitions
+import * as classes from "./capture.scss";
+console.log('imported scss file', classes);
 injectTapEventPlugin();
 import {fade} from 'material-ui/utils/colorManipulator';
 import {
