@@ -18,3 +18,4 @@ coverage
 node_modules
 npm-debug.log
 public/js/index.js
+public/css/style.css

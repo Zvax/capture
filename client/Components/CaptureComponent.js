@@ -78,7 +78,7 @@ export default class CaptureComponent extends React.Component {
               onClick={this.saveAction}
               label="Capture!" />
             <List>
-              {this.listStuff(this.props.stuff)}
+              {this.listStuff(this.props.stuff, 0)}
             </List>
           </Paper>
         </div>

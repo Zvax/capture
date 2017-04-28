@@ -1,11 +1,17 @@
+'use strict';
+const ExtractTextPlugin = require('extract-text-webpack-plugin');
 module.exports = {
   entry: {
-    index: './client/index.js'
+    'js/index.js': './client/index.js',
+    'css/style.css': './client/style/capture.scss',
   },
   output: {
-    path: __dirname + '/public/js',
-    filename: '[name].js'
+    path: __dirname + '/public/',
+    filename: "[name]"
   },
+  plugins: [
+    new ExtractTextPlugin('css/style.css'),
+  ],
   target: 'web',
   module: {
     loaders: [
@@ -14,18 +20,18 @@ module.exports = {
         loader: 'babel-loader',
         query: {
           presets: ['react', 'es2015'],
-          plugins: ['transform-object-rest-spread', 'transform-class-properties']
+          plugins: ['transform-object-rest-spread', 'transform-class-properties'],
         },
       },
       {
         test: /\.scss/,
-        loader: 'style-loader!css-loader!sass-loader',
+        loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader!sass-loader'}),
       },
       {
         test: /\.css/,
-        loader: 'style-loader!css-loader',
-      }
-    ]
+        loader: ExtractTextPlugin.extract({fallback: 'style-loader', use: 'css-loader'}),
+      },
+    ],
   },
   performance: {
     hints: 'warning', // 'error' or false are valid too

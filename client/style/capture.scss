@@ -1,0 +1,11 @@
+@import "pure_min_0.6.2.css";
+@import "pure_grid_min_0.6.2.css";
+$var: 10px;
+html, body {
+  height: 100%;
+}
+.capture {
+  .viewport {
+    padding: $var;
+  }
+}
