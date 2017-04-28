@@ -4,24 +4,22 @@ Capture all the tasks
 
 ## Installation
 
- - `composer install --no-dev --optimize-autoloader`
  - `npm install`
  - `npm build:prod`
- - import the content of `data/struct.sql` to the database
+ - `node bin/automigrate.js` (this might hang after the job, terminating it seems ok)
 
 ## Configuration
 
-The app expects a config.ini file at the topmost level:
+Configure mysql/mariadb database credentials in environment variables. This will not work otherwise.
 
 <pre>
-host = localhost
-port = 3306
-charset = utf8
-dbname = dbname
-user = user
-passwd = passwd
+DS_HOST = localhost
+DS_PORT = 3306
+DS_DBNAME = dbname
+DS_USER = user
+DS_PASSWD = passwd
 </pre>
 
 ## Running the app
 
-Then serve the content of /public.
+`node .`

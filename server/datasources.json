@@ -1,0 +1,15 @@
+{
+  "db": {
+    "name": "db",
+    "connector": "memory"
+  },
+  "mariadb": {
+    "host": "${DS_HOST}",
+    "port": "${DS_PORT}",
+    "database": "${DS_DBNAME}",
+    "password": "${DS_PASSWD}",
+    "name": "mariadb",
+    "user": "${DS_USER}",
+    "connector": "mysql"
+  }
+}

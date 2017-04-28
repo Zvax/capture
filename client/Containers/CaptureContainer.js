@@ -10,7 +10,7 @@ export default class CaptureContainer extends React.Component {
     this.loadStuff();
   }
   loadStuff = () => {
-    http.makeRequest('GET', '/stuff', (response, statusCode) => {
+    http.get('/api/stuff', (response, statusCode) => {
       if (statusCode === 200) {
         this.setState({
           ...this.state,
@@ -22,13 +22,13 @@ export default class CaptureContainer extends React.Component {
     });
   };
   insert = (description) => {
-    http.post('/captures', {description: description}, () => {
+    http.post('/api/stuff', {description: description}, () => {
       console.log('goal was saved');
       this.loadStuff();
     });
   };
   update = (id, description) => {
-    http.put('/captures', {id: id, description: description}, () => {
+    http.patch(`/api/stuff/${id}`, {description: description}, () => {
       console.log('goal was updated');
     });
   };

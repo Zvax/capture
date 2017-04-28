@@ -10,37 +10,47 @@ const objectToFormData = (object) => {
 };
 const http = ( (getXhr, objectToFormData) => {
   return {
-    makeRequest: (method, url, next) => {
+    get: (url, next) => {
       let xhr = getXhr();
       xhr.onload = () => {
         if (next) {
           next(xhr.response, xhr.status);
         }
       };
-      xhr.open(method, url);
+      xhr.open('GET', url);
       xhr.send();
     },
-    post: (url, data, callable) => {
-      if (typeof data !== FormData) {
-        data = objectToFormData(data);
-      }
+    post: (url, data, next) => {
       let xhr = getXhr();
       xhr.onload = () => {
-        if (callable !== undefined) {
-          callable(xhr.responseText, xhr.status);
+        if (next !== undefined) {
+          next(xhr.responseText, xhr.status);
         }
       };
       xhr.open('POST', url);
-      xhr.send(data);
+      xhr.setRequestHeader('content-type', 'application/json');
+      xhr.send(JSON.stringify(data));
     },
-    put: (url, data, callable) => {
+    put: (url, data, next) => {
       let xhr = getXhr();
       xhr.onload = () => {
-        if (callable !== undefined) {
-          callable(xhr.responseText, xhr.status);
+        if (next !== undefined) {
+          next(xhr.responseText, xhr.status);
         }
       };
       xhr.open('PUT', url);
+      xhr.setRequestHeader('content-type', 'application/json');
+      xhr.send(JSON.stringify(data));
+    },
+    patch: (url, data, next) => {
+      let xhr = getXhr();
+      xhr.onload = () => {
+        if (next !== undefined) {
+          next(xhr.responseText, xhr.status);
+        }
+      };
+      xhr.open('PATCH', url);
+      xhr.setRequestHeader('content-type', 'application/json');
       xhr.send(JSON.stringify(data));
     },
   };
