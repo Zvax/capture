@@ -5,3 +5,4 @@ let ds = app.datasources.mariadb;
 ds.automigrate('stuff', function(err) {
   if (err) throw err;
 });
+return 0;

@@ -14,13 +14,21 @@
       "type": "number",
       "required": true,
       "default": 1
-    },
-    "parentId": {
-      "type": "number"
     }
   },
   "validations": [],
-  "relations": {},
+  "relations": {
+    "children": {
+      "type": "hasMany",
+      "model": "stuff",
+      "foreignKey": ""
+    },
+    "parent": {
+      "type": "belongsTo",
+      "model": "stuff",
+      "foreignKey": "stuffId"
+    }
+  },
   "acls": [],
   "methods": {}
 }

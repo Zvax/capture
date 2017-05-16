@@ -10,7 +10,7 @@ export default class CaptureContainer extends React.Component {
     this.loadStuff();
   }
   loadStuff = () => {
-    http.get('/api/stuff', (response, statusCode) => {
+    http.get('/api/stuff?filter[include]=children', (response, statusCode) => {
       if (statusCode === 200) {
         this.setState({
           ...this.state,
