@@ -26,7 +26,8 @@
     "parent": {
       "type": "belongsTo",
       "model": "stuff",
-      "foreignKey": "stuffId"
+      "foreignKey": "stuffId",
+      "default": 0
     }
   },
   "acls": [],
